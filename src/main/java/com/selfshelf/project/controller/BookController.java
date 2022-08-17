@@ -31,7 +31,7 @@ public class BookController {
     @GetMapping("/books")
     public String listBooks(Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("id", currentUser.getId());
         model.addAttribute("books", bookService.getAllAvailableBooks());
         model.addAttribute("allBooks", bookService.getAllBooks());
@@ -124,7 +124,7 @@ public class BookController {
     public String faq(Model model, Principal principal) {
         System.out.println("------------------principal:--------"+principal.getName());
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("id", currentUser.getId());
         model.addAttribute("pageName", "Book Search");
         return "faq";

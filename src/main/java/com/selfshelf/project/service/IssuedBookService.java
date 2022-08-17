@@ -71,13 +71,13 @@ public class IssuedBookService {
         BookEntity book = issue.getBookEntity();
         book.setBookStatus(Status.BOOK_AVAILABLE);
         bookService.updateBook(book);
-        issue.setIssueEndDate(realReturnDate);
-        issue.setStatus(Status.DELETED);
-        issuedBookRepository.save(issue);
         History history = new History();
         history.setIssuedBook(issue);
         LocalDate planedEndDate = issue.getIssueEndDate();
         history.setOverdueDays(planedEndDate.until(realReturnDate).getDays());
+        issue.setIssueEndDate(realReturnDate);
+        issue.setStatus(Status.DELETED);
+        issuedBookRepository.save(issue);
         historyRepository.save(history);
 
     }

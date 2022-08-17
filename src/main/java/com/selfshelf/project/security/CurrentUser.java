@@ -17,7 +17,7 @@ public class CurrentUser {
         UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = details.getUsername();
         long userId = -1;
-        for (UserEntity user : userService.listAll()) {
+        for (UserEntity user : userService.getUsers()) {
             if (user.getEmail().equals(username)) {
                 userId = user.getId();
                 break;

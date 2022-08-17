@@ -43,7 +43,7 @@ public class UserController {
     public String showAdminAccountPage(Model model, Principal principal) {
         String currentUserEmail = principal.getName();
         System.out.println("------------------principal:--------"+principal.getName());
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("fullName", currentUser.getFullName());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("id", currentUser.getId());
@@ -55,10 +55,10 @@ public class UserController {
     @GetMapping("/users")
     public String viewPageUsers(Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         Long currentUserId = currentUser.getId();
         model.addAttribute("id", currentUserId);
-        model.addAttribute("listUsers", userService.listAll());
+        model.addAttribute("listUsers", userService.getUsers());
         model.addAttribute("firstName", currentUser.getFullName());
         model.addAttribute("permissions", currentUser.getUserRole().getGrantedAuthorities());
         return "users";
@@ -67,7 +67,7 @@ public class UserController {
     @GetMapping("/users/update/{id}")
     public String editUserById(@PathVariable("id") Long id, Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("pageName", "Edit " + currentUser.getFullName() + " info:");
         UserEntity user = userService.getById(id);
         model.addAttribute("user", user);

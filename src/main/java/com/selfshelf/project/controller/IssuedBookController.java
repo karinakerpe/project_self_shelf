@@ -48,7 +48,7 @@ public class IssuedBookController {
         issuedBookService.issueBookWithActiveReservation(currentBook, currentReservation.getUserEntity());
         reservationService.deleteByIdUpdatingBookStatus(currentReservation.getId());
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         if (currentUser.getUserRole().name().equals("USER")){
         return "redirect:/books";
         }else{
@@ -59,7 +59,7 @@ public class IssuedBookController {
     @GetMapping("/admin")
     public String viewIssuedBooksForAdminId(Principal principal, Model model) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("currentUserId", currentUser.getId());
 
         List<IssuedBook> issuedBooks = issuedBookService.findIssueBooksWithIssueStatusActive();
@@ -73,7 +73,7 @@ public class IssuedBookController {
     @GetMapping("/user")
     public String viewIssuedBooksForUserId(Principal principal, Model model) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         Long currentUserId = currentUser.getId();
         List<IssuedBook> issuedBooksActive = issuedBookService.findIssuedBooksByUserIdActive(currentUserId);
         model.addAttribute("issuedBooksActive", issuedBooksActive);

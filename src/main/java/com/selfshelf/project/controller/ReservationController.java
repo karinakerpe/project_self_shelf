@@ -36,7 +36,7 @@ public class ReservationController {
     @GetMapping("/{id}")
     public String viewReservation(@PathVariable("id") Long id, Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         BookEntity currentBook = bookService.getBookById(id);
         model.addAttribute("book", currentBook);
         model.addAttribute("user", currentUser);
@@ -54,7 +54,7 @@ public class ReservationController {
     @PostMapping("/{id}")
     public String makeReservation(@PathVariable("id") Long id, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         BookEntity currentBook = bookService.getBookById(id);
         currentBook.setBookStatus(Status.BOOK_RESERVED);
         LocalDate startDate = LocalDate.now().minusDays(30);
@@ -68,7 +68,7 @@ public class ReservationController {
     @GetMapping("/active_reservation")
     public String viewReservationsForUserId(Principal principal, Model model) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         Long currentUserId = currentUser.getId();
         List<Reservation> reservations = reservationService.findReservationByUserId(currentUserId);
         model.addAttribute("reservations", reservations);
@@ -85,7 +85,7 @@ public class ReservationController {
         model.addAttribute("expiredReservations", expiredReservations);
         model.addAttribute("date", LocalDate.now());
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("id", currentUser.getId());
 
         return "admin_reservations";
@@ -97,7 +97,7 @@ public class ReservationController {
         reservationService.deleteReservationById(id);
 
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.findUserByEmail(currentUserEmail);
+        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         if (currentUser.getUserRole().name().equals("USER")){
             return "redirect:/reservation/active_reservation";
         }else{
