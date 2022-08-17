@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
+<head>
+  <meta charset="UTF-8">
+  <title>--b--</title>
+  <meta name="description" content="Library Management System">
+  <meta name="keywords" content="HTML,CSS,JavaScript, Quotes, API">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+</head>
+
+<body class="simple-page">
+<nav  class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">SELF-SHELF</a>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+  </head>
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div sec:authorize="isAuthenticated()" class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/books/faq}" >FAQ</a>
+      </li>
+
+
+    </ul>
+  </div>
+</nav>
+</body>
+<body>
+<div class="container text-center">
+
+</div>
+</body>
+
+<body class="sub_page">
+<div class="container text-center">
+  <p></p>
+  <div class="row">
+    <p></p>
+    <div class="col"></div>
+    <div class="col">
+      <p></p>
+      <h3 class="bg-dark rounded text-light">Karina Homework</h3>
+      <h5 class = "border border-dark rounded text-secondary">Library Management System</h5>
+    </div>
+
+    <div class="col"></div>
+  </div>
+  <p></p>
+  <div class="row">
+    <div class="col"></div>
+    <p></p>
+    <div class="col bg-dark rounded">
+      <p></p>
+      <a class="btn btn-outline-light" href="user_account.html" th:href="@{login}">Login</a>
+      <p></p>
+      <a class="btn btn-outline-warning" href="user_account.html" th:href="@{/register}">Register</a>
+      <p></p>
+    </div>
+    <p></p>
+    <div class="col"></div>
+  </div>
+</div>
+</body>
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+
+  </div>
+
+</div>
+<!-- Pills content -->
+
+<!-- bootstrap core css -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+<!-- fonts style -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="css/style.css" rel="stylesheet" />
+<!-- responsive style -->
+<link href="css/responsive.css" rel="stylesheet" />
+</head>
+
+</body>
+
+</html>

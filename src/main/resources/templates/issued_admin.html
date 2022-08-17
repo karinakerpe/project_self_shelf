@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>--b--</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">SELF-SHELF</a>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet" />
+    </head>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/reservation/active_reservation}">Reservations</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/users}">Users</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/issued/user}">Issued Books</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/issued/admin}">Issued Books</a>
+            </li>
+            <li class="nav-item">
+                <a  sec:authorize="hasRole('ROLE_ADMIN')"class="nav-link" th:href="@{/reservation/active_reservation/all}">Reserved Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/users/update/{id}(id=${currentUserId})}" >Edit Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books/faq}" >FAQ</a>
+            </li>
+
+            <div>
+                <li clas="nav-item">
+                    <form class="form-signin"  method="get" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()"  class = "btn btn-outline-secondary" type="submit">Logout</button>
+                    </form>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <p></p>
+            <div>
+                <a class="btn btn-outline-secondary" href="user_account.html" th:href="@{/account}">Back to Home Page</a>
+            </div>
+        </div>
+        <div class="col-lg-10">
+
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <h1>Issued books</h1>
+            <table class="table table-light table-hover table-sm table-bordered ">
+                <thead class="table-info">
+                <tr>
+                    <th> Date</th>
+                    <th> User</th>
+                    <th> Book Id</th>
+                    <th> Author</th>
+                    <th> Title</th>
+                    <th> Return Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <div th:if="${issuedBooks.isEmpty}">
+                        <td><p>No Active issue</p></td>
+                    </div>
+                </tr>
+                <tr th:if="${!issuedBooks.isEmpty}"
+                    th:each="issuedBook: ${issuedBooks}">
+                    <td th:text="${issuedBook.issueStartDate}"></td>
+                    <td th:text="${issuedBook.userEntity.getFullName}"></td>
+                    <td th:text="${issuedBook.bookEntity.id}"></td>
+                    <td th:text="${issuedBook.bookEntity.author}"></td>
+                    <td th:text="${issuedBook.bookEntity.title}"></td>
+                    <td th:if = "${!issuedBook.issueEndDate.isAfter(date)}" class="table-danger" th:text="${issuedBook.issueEndDate}"></td>
+                    <td th:if = "${issuedBook.issueEndDate.isAfter(date)}" th:text="${issuedBook.issueEndDate}"></td>
+                    <td><a th:href="@{/issued/return/{id}(id=${issuedBook.id})}" class="btn btn-warning btn-sm">Return Book</a></td>
+
+                    <!--                        <a method = "post"-->
+                    <!--                           class="btn btn-warning">Return Book</a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <!--===============================================================================================-->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+
+
+    </div>
+</div>
+</body>
+</html>

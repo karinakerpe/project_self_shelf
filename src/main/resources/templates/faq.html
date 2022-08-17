@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>--b--</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav  class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">SELF-SHELF</a>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet" />
+    </head>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/reservation/active_reservation}">Reservations</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/users}">Users</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/issued/user}">Issued Books</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/issued/admin}">Issued Books</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/books}">Reserved Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/users/update/{id}(id=${id})}">Edit Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books/faq}" >FAQ</a>
+            </li>
+
+
+            <div>
+                <li clas="nav-item">
+                    <form class="form-signin" method="get" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-secondary" type="submit">Logout
+                        </button>
+                    </form>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <p></p>
+    <div class="border border-dark rounded">
+    <h3 >Frequently asked questions (FAQ)</h3></div>
+    <h4>For how long can I borrow a book?</h4>
+    <p>Books can be borrowed for 21 days. This period can be extended by one week at a time, with a maximum of three weeks. Extending is free of charge
+        and can only be done if no one else made a reservation for that particular book. The status of your books
+        can be checked on your personal library account </p>
+
+    <h4>How can I reserve a book?</h4>
+    <p>Search for the book via your Library Catalog and click the "Reserve" button. A reservations is valid for 7 days and it is free.
+        If the book is not picked-up after 7 days, the reservation will automatically be canceled.</p>
+
+    <h4>What happens if I can't return a book on time?</h4>
+    A fine of EUR 0,10 per book is charged per day. When keeping a book in your possession that should have been returned, reservations
+    cannot be made and new orders cannot be picked up.
+
+    <p></p>
+    <b style="color:red">Can't  find your answer here? Please reach out to us by
+        sending an email to <a class="btn btn-outline-danger" href="#">customerservice@group1.com</a></b>
+
+    <p>
+
+    </p>
+    <div class = "row">
+        <a sec:authorize="isAuthenticated()"class="btn btn-outline-secondary" th:href="@{/books}" role="button">Back</a>
+    </div>
+    <p></p>
+    <div class="row">
+        <a sec:authorize="!isAuthenticated()"class="btn btn-outline-secondary" href="index.html" th:href="@{/}">Back to Home Page</a>
+    </div>
+    <p></p>
+    <div class="row">
+        <a sec:authorize="isAuthenticated()"class="btn btn-outline-secondary" href="user_account.html" th:href="@{/account}">Back to Home Page</a>
+    </div>
+</div>
+
+
+
+</body>
+</html>

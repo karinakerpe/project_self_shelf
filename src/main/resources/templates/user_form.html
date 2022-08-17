@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>--b--</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/book">SELF-SHELF</a>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"
+          rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet"/>
+    </head>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/reservation/active_reservation}">Reservations</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/users}">Users</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/issued/user}">Issued Books</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/issued/admin}">Issued Books</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link"
+                   th:href="@{/reservation/active_reservation/all}">Reserved Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/users/update/{id}(id=${id})}">Edit Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books/faq}">FAQ</a>
+            </li>
+
+            <div>
+                <li clas="nav-item">
+                    <form class="form-signin" method="get" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-secondary" type="submit">Logout
+                        </button>
+                    </form>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+<body>
+<div class="container text-center">
+    <div class="text-center">
+        <h1> Edit User</h1>
+    </div>
+
+    <form th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">E-mail: </label>
+                <div class="col-8">
+                    <input type="email" readonly="readonly" th:field="*{email}" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Password: </label>
+                <div class="col-8">
+                    <input type="password" th:field="*{password}" class="form-control"
+                           required minlength="6" maxlength="10"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">First Name: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{firstName}" class="form-control"
+                           required minlength="2" maxlength="20"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Last Name: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{lastName}" class="form-control"
+                           required minlength="2" maxlength="20"/>
+                </div>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')" class="form-group row">
+                <label class="col-4 col-form-label">Set Permissions: </label>
+                <div class="col-4">
+                    <input type="radio" name="role" th:field="*{userRole}" value="ADMIN"> ADMIN
+                    <input type="radio" name="role" th:field="*{userRole}" value="USER"> USER
+
+                </div>
+            </div>
+            <div class="container">
+
+                    <button type="submit" class="btn btn-outline-info ">Update</button>
+                </div>
+                <p></p>
+                <div class="container">
+                    <a class="btn btn-outline-secondary" href="user_account.html" th:href="@{/account}">Back to Home Page</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</body>
+</html>

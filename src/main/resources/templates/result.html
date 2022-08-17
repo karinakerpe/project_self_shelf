@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>--b--</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.0.1/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="/webjars/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/extensions/filter-control/bootstrap-table-filter-control.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">SELF-SHELF</a>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"
+          rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet"/>
+    </head>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/reservation/active_reservation}">Reservations</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/users}">Users</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/issued/user}">Issued Books</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/issued/admin}">Issued Books</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link"-->
+<!--                   th:href="@{/reservation/active_reservation/all}">Reserved Books</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/users/update/{id}(id=${id})}">Edit Account</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/books/faq}">FAQ</a>-->
+<!--            </li>-->
+
+            <div>
+                <li clas="nav-item">
+                    <form class="form-signin" method="get" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-secondary" type="submit">Logout
+                        </button>
+                    </form>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+<p></p>
+<div class="container">
+    <div class="row">
+        <a class="btn btn-outline-secondary" th:href="@{/books/search}" role="button">Back</a>
+    </div>
+    <p></p>
+    <div class = "row">
+        <a class="btn btn-outline-secondary" href="user_account.html" th:href="@{/account}">Back to Home
+            Page</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1 th:text="${pageName}"></h1>
+
+    <div th:switch="${books}">
+        <div class="row">
+            <h2 th:case="null">No Such Book!</h2>
+
+            <div th:case="*" class="container">
+                <h2>Books</h2>
+
+                <table class="table table-light table-hover table-responsive-md"
+                       id="table"
+                       data-toggle="table"
+                       data-filter-control="true"
+                       data-search="true"
+                       data-show-columns="true">
+                    <thead class="table-info">
+                    <tr>
+                        <th data-field="title" data-filter-control="select">Title</th>
+                        <th data-field="author" data-filter-control="select">Author</th>
+                        <th data-field="yearOfPublish" data-filter-control="select">Year</th>
+                        <th data-field="pages" data-filter-control="select">Pages</th>
+                        <th data-field="status" data-filter-control="select">Status</th>
+                        <th data-field="action" data-filter-control="action">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.author}"></td>
+                        <td th:text="${book.yearOfPublish}"></td>
+                        <td th:text="${book.pages}"></td>
+                        <td th:text="${book.bookStatus}"></td>
+
+                        <td>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/books/info/{id}(id=${book.id})}"
+                               class="btn btn-outline-secondary btn-sm">Get Info</a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${book.bookStatus.name().equals('BOOK_AVAILABLE')}" href="#"
+                               class="btn btn-dark btn-sm disabled" role="button" aria-disabled="true">Issue</a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${book.bookStatus.name().equals('BOOK_RESERVED')}"
+                               th:href="@{/issued/{id}(id=${book.id})}"
+                               class="btn btn-success btn-sm">Issue</a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${book.bookStatus.name().equals('BOOK_ISSUED')}" href="#"
+                               class="btn btn-dark btn-sm disabled" role="button" aria-disabled="true">Issue</a>
+
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/books/edit/{id}(id = ${book.id})}"
+                               class="btn btn-warning btn-sm">Update</a>
+
+                            <a sec:authorize="hasRole('ROLE_ADMIN')"
+                                    th:if="${book.bookStatus.name().equals('BOOK_AVAILABLE')}"
+                               th:href="@{/books/{id}(id = ${book.id})}"
+                               class="btn btn-outline-danger btn-sm">Delete</a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')"
+                                    th:if="${book.bookStatus.name().equals('BOOK_ISSUED')}" href="#"
+                               class="btn btn-outline-danger btn-sm disabled" role="button" aria-disabled="true">Delete</a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')"
+                                    th:if="${book.bookStatus.name().equals('BOOK_RESERVED')}" href="#"
+                               class="btn btn-outline-danger btn-sm disabled" role="button" aria-disabled="true">Delete</a>
+
+                            <a sec:authorize="hasRole('ROLE_USER')" th:if="${book.bookStatus.name().equals('BOOK_AVAILABLE')}" th:href="@{/reservation/{id}(id=${book.id})}" class="btn btn-warning btn-sm">Reserve</a>
+
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+    $(function() {
+        $('#table').bootstrapTable()
+    })
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

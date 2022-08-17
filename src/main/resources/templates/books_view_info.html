@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Book</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/books">SELF-SHELF</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books/faq}">FAQ</a>
+            </li>
+
+
+            <div>
+                <li clas="nav-item">
+                    <form class="form-signin" method="get" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-secondary" type="submit">Logout
+                        </button>
+                    </form>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+<p></p>
+<div class="container">
+
+    <p></p>
+    <div class="row">
+        <a class="btn btn-outline-secondary" href="user_account.html" th:href="@{/books}">Back</a>
+    </div>
+
+    <p></p>
+    <p></p>
+
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <h3>General information</h3>
+
+        <table class="table table-light table-hover table-sm table-bordered ">
+            <thead class="table-info">
+            <tr>
+                <th> Book Id</th>
+                <th> Author</th>
+                <th> Title</th>
+                <th> Year</th>
+                <th> Page Count</th>
+                <th> ISBN</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="book: ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.yearOfPublish}"></td>
+                <td th:text="${book.pages}"></td>
+                <td th:text="${book.isbn}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <h3>Book Status</h3>
+        <table class="table table-info table-hover table-sm table-bordered ">
+            <thead class="table-info">
+            <tr>
+                <th> Status</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="book: ${books}">
+
+                <td th:text="${book.bookStatus}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <h3>Active reservation</h3>
+
+        <table class="table table-light table-hover table-sm table-bordered ">
+            <thead class="table-info">
+            <tr>
+                <th> Reservation Id</th>
+                <th> Reservation date</th>
+                <th> Reserved by</th>
+                <th> User Id</th>
+                <th> Reservation end date</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr>
+                <div th:if="${reservations.isEmpty}">
+                    <td><p>No Active reservations</p></td>
+                </div>
+            </tr>
+            <tr th:if="${!reservations.isEmpty}"
+                th:each="reservation: ${reservations}">
+                <td th:text="${reservation.id}"></td>
+                <td th:text="${reservation.reservationStartDate}"></td>
+                <td th:text="${reservation.userEntity.getFullName}"></td>
+                <td th:text="${reservation.userEntity.id}"></td>
+                <td th:text="${reservation.reservationEndDate}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h3>Active Issue</h3>
+
+        <table class="table table-light table-hover table-sm table-bordered ">
+            <thead class="table-info">
+            <tr>
+                <th> Issue Id</th>
+                <th> Issue date</th>
+                <th> Issued to</th>
+                <th> Issue end date</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr>
+                <div th:if="${issues.isEmpty}">
+                    <td><p>No Active issue</p></td>
+                </div>
+            </tr>
+            <tr th:if="${!issues.isEmpty}"
+                th:each="issue: ${issues}">
+                <td th:text="${issue.id}"></td>
+                <td th:text="${issue.issueStartDate}"></td>
+                <td th:text="${issue.userEntity.getFullName}"></td>
+                <td th:text="${issue.issueEndDate}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h3>Issue history</h3>
+
+        <table class="table table-light table-hover table-sm table-bordered ">
+            <thead class="table-info">
+            <tr>
+                <th> Issue Id</th>
+                <th> Issue date</th>
+                <th> Issued to</th>
+                <th> Issue end date</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+
+            <tr
+                th:each="history: ${history}">
+                <td th:text="${history.id}"></td>
+                <td th:text="${history.issuedBook.issueStartDate}"></td>
+                <td th:text="${history.issuedBook.userEntity.getFullName}"></td>
+                <td th:text="${history.issuedBook.issueEndDate}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <p></p>
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+
+
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>--b--</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="/webjars/bootstrap/5.0.1/css/bootstrap.min.css">-->
+<!--    <script src="/webjars/bootstrap/5.0.1/js/bootstrap.min.js"></script>-->
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">SELF-SHELF</a>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap"
+          rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet"/>
+    </head>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/books}">Library Catalog</a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/reservation/active_reservation}">Reservations</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/users}">Users</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/issued/user}">Issued Books</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/issued/admin}">Issued Books</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link"-->
+<!--                   th:href="@{/reservation/active_reservation/all}">Reserved Books</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/users/update/{id}(id=${id})}">Edit Account</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/books/faq}">FAQ</a>-->
+<!--            </li>-->
+
+            <div>
+                <li clas="nav-item">
+                    <form class="form-signin" method="get" th:action="@{/logout}">
+                        <button sec:authorize="isAuthenticated()" class="btn btn-outline-secondary" type="submit">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>
+<p></p>
+<div class = "container">
+    <div>
+        <a class="btn btn-outline-secondary" href="user_account.html" th:href="@{/account}">Back to Home Page</a>
+    </div>
+
+</div>
+<div class="container">
+<h1 th:text="${pageName}"></h1>
+
+<div class="col-md-3"></div>
+<div class="col-md-4">
+    <form th:object="${bookSearch}" method="post" th:action="@{/books/search}">
+        <div class="mb-3">
+            <label for="exampleInputTitle" class="form-label">Search by title</label>
+            <input type="text" class="form-control" th:field="*{title}" id="exampleInputTitle"
+                   aria-describedby="nameHelp">
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputAuthor" class="form-label">Search by author</label>
+            <input type="text" class="form-control" th:field="*{author}" id="exampleInputAuthor"
+                   aria-describedby="usernameHelp">
+            <div id="usernameHelp" class="form-text"></div>
+            <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputYear" class="form-label">Search by year</label>
+            <input type="text" th:field="*{yearOfPublish}"  class="form-control" id="exampleInputYear">
+            <span th:if="${#fields.hasErrors('yearOfPublish')}" th:errors="*{yearOfPublish}" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPages" class="form-label">Search by pages</label>
+            <input type="text" th:field="*{pages}"  class="form-control" id="exampleInputPages">
+            <span th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}" class="text-danger"></span>
+        </div>
+        <button type="submit" th:href="@{/books/result}" class="btn btn-outline-info"> Search </button>
+
+    </form>
+    <p></p>
+    <a class="btn btn-outline-secondary" th:href="@{/books}" role="button">Back</a>
+
+
+        </div>
+
+</div>
+<p></p>
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<script src="vendor/jquery/jquery-3.2.1.min.js"></script>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<script src="vendor/bootstrap/js/popper.js"></script>-->
+<!--<script src="vendor/bootstrap/js/bootstrap.min.js"></script>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<script src="vendor/select2/select2.min.js"></script>-->
+<!--&lt;!&ndash;===============================================================================================&ndash;&gt;-->
+<!--<script src="js/main.js"></script>-->
+</body>
+</html>
