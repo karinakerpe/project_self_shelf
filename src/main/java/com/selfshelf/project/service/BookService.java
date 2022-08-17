@@ -19,11 +19,6 @@ public class BookService {
     BookRepository bookRepository;
 
 
-
-
-
-
-
     public List<BookEntity> getAllBooks() {
         return bookRepository.findAll();
     }
