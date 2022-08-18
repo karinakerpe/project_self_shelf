@@ -122,7 +122,6 @@ public class BookController {
 
     @GetMapping(value = "/books/faq")
     public String faq(Model model, Principal principal) {
-        System.out.println("------------------principal:--------"+principal.getName());
         String currentUserEmail = principal.getName();
         UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
         model.addAttribute("id", currentUser.getId());
