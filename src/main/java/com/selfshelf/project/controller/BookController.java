@@ -82,7 +82,6 @@ public class BookController {
 
     @GetMapping("/books/{id}")
     public String deleteBook(@PathVariable Long id) {
-        BookEntity currentBook = bookService.getBookById(id);
         bookService.deleteBookById(id);
         return "redirect:/books";
     }
