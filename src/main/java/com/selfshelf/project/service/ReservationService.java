@@ -1,6 +1,7 @@
 package com.selfshelf.project.service;
 
 
+import com.selfshelf.project.exception.ReservationNotFoundException;
 import com.selfshelf.project.model.*;
 import com.selfshelf.project.repository.HistoryRepository;
 import com.selfshelf.project.repository.ReservationRepository;
@@ -63,7 +64,9 @@ public class ReservationService {
     }
 
     public void deleteByIdUpdatingBookStatus(Long id) {
-        Reservation reservation = reservationRepository.findById(id).get();
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(
+                () ->new ReservationNotFoundException("Reservation not found!")
+        );
         reservation.setStatus(Status.DELETED);
         History history = new History();
         history.setReservation(reservation);

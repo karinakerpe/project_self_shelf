@@ -1,5 +1,6 @@
 package com.selfshelf.project.controller;
 
+import com.selfshelf.project.model.DAO.UserEntityDao;
 import com.selfshelf.project.model.IssuedBook;
 import com.selfshelf.project.model.UserEntity;
 import com.selfshelf.project.security.CurrentUser;
@@ -42,11 +43,10 @@ public class UserController {
     @GetMapping("/account")
     public String showAdminAccountPage(Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        System.out.println("------------------principal:--------"+principal.getName());
-        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
-        model.addAttribute("fullName", currentUser.getFullName());
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("id", currentUser.getId());
+        UserEntity userLoggedIn = userService.getUserByEmail(currentUserEmail);
+        model.addAttribute("fullName", userLoggedIn.getFullName());
+        model.addAttribute("currentUser", userLoggedIn);
+        model.addAttribute("id", userLoggedIn.getId());
         List<IssuedBook> booksList = issuedBookService.findIssueBooksWithIssueStatusActive();
         model.addAttribute("bookList",booksList);
         return "user_account";
@@ -55,23 +55,23 @@ public class UserController {
     @GetMapping("/users")
     public String viewPageUsers(Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
-        Long currentUserId = currentUser.getId();
+        UserEntity userLoggedIn = userService.getUserByEmail(currentUserEmail);
+        Long currentUserId = userLoggedIn.getId();
         model.addAttribute("id", currentUserId);
         model.addAttribute("listUsers", userService.getUsers());
-        model.addAttribute("firstName", currentUser.getFullName());
-        model.addAttribute("permissions", currentUser.getUserRole().getGrantedAuthorities());
+        model.addAttribute("firstName", userLoggedIn.getFullName());
+        model.addAttribute("permissions", userLoggedIn.getUserRole().getGrantedAuthorities());
         return "users";
     }
 
     @GetMapping("/users/update/{id}")
     public String editUserById(@PathVariable("id") Long id, Model model, Principal principal) {
         String currentUserEmail = principal.getName();
-        UserEntity currentUser = userService.getUserByEmail(currentUserEmail);
-        model.addAttribute("pageName", "Edit " + currentUser.getFullName() + " info:");
+        UserEntity userLoggedIn = userService.getUserByEmail(currentUserEmail);
+        model.addAttribute("pageName", "Edit " + userLoggedIn.getFullName() + " info:");
         UserEntity user = userService.getById(id);
         model.addAttribute("user", user);
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", userLoggedIn);
         return "user_form";
     }
 
@@ -95,7 +95,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(UserEntity user) {
+    public String saveUser(UserEntityDao user) {
         userService.saveUser(user);
         return "redirect:/list_users";
 

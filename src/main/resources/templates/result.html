@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="ISO-8859-1">
@@ -44,28 +44,6 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/books}">Library Catalog</a>
             </li>
-<!--            <li class="nav-item">-->
-<!--                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/reservation/active_reservation}">Reservations</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/users}">Users</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link" th:href="@{/issued/user}">Issued Books</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/issued/admin}">Issued Books</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link"-->
-<!--                   th:href="@{/reservation/active_reservation/all}">Reserved Books</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" th:href="@{/users/update/{id}(id=${id})}">Edit Account</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" th:href="@{/books/faq}">FAQ</a>-->
-<!--            </li>-->
 
             <div>
                 <li clas="nav-item">
@@ -175,5 +153,6 @@
 
 
     </script>
+</div>
 </body>
 </html>

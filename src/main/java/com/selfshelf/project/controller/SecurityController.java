@@ -1,6 +1,7 @@
 package com.selfshelf.project.controller;
 
 
+import com.selfshelf.project.model.DAO.UserEntityDao;
 import com.selfshelf.project.model.UserEntity;
 import com.selfshelf.project.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class SecurityController {
     }
 
     @PostMapping("/process_register")
-    public String processRegistration(UserEntity user) {
+    public String processRegistration(UserEntityDao user) {
         service.saveUser(user);
 
         return "registration_successful";
@@ -49,7 +50,7 @@ public class SecurityController {
     }
 
     @PostMapping("/process_register_admin")
-    public String processRegistrationAdminAddUser (UserEntity user) {
+    public String processRegistrationAdminAddUser (UserEntityDao user) {
         service.saveUser(user);
         return "registration_successful";
 

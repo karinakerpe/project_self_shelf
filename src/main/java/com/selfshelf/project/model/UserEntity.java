@@ -38,4 +38,16 @@ public class UserEntity {
         return firstName + " " + lastName;
     }
 
+    public UserEntity(Long id, String email, String password, String firstName, String lastName, UserRole userRole, List<Reservation> reservations, List<IssuedBook> issuedBooks) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userRole = userRole;
+        this.reservations = reservations;
+        this.issuedBooks = issuedBooks;
+    }
+    public UserEntity() {
+    }
 }

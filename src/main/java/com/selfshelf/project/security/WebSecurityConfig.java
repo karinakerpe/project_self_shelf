@@ -68,11 +68,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/books/search",
                         "/books/faq",
                         "/reservation/**",
-                        "/book-main", "books","/books","faq", "/books/faq").hasAnyRole(ADMIN.name(), USER.name())
+                        "/book-main", "books","faq", "/books/faq").hasAnyRole(ADMIN.name(), USER.name())
                 .antMatchers("/users/update/{id}").hasAnyRole(ADMIN.name(), USER.name())
                 .antMatchers( HttpMethod.GET,"/books/{id}").hasAnyRole(ADMIN.name(), USER.name())
                 .antMatchers("/issued/user").hasRole(USER.name())
-                .antMatchers("/users/**", "/issued/admin", "/issued/return/{id}", "/issued/return/{id}").hasRole(ADMIN.name())
+                .antMatchers("/users/**", "/issued/admin", "/issued/return/{id}").hasRole(ADMIN.name())
                 .antMatchers(HttpMethod.GET, "/issued/return/{id}").hasRole(ADMIN.name())
                 .and()
                 .formLogin()

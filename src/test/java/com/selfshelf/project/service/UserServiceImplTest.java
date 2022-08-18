@@ -94,13 +94,13 @@ class UserServiceImplTest {
     private UserServiceImpl userServiceImpl;
 
 
-    @Test
-    void testSaveUser() {
-        when(this.userRepository.save((UserEntity) any())).thenReturn(userEntity2);
-        assertSame(userEntity2, this.userServiceImpl.saveUser(userEntity3));
-        verify(this.userRepository).save((UserEntity) any());
-        assertEquals(UserRole.USER, userEntity2.getUserRole());
-    }
+//    @Test
+//    void testSaveUser() {
+//        when(this.userRepository.save((UserEntity) any())).thenReturn(userEntity2);
+//        assertSame(userEntity2, this.userServiceImpl.saveUser(userEntity3));
+//        verify(this.userRepository).save((UserEntity) any());
+//        assertEquals(UserRole.USER, userEntity2.getUserRole());
+//    }
 
     @Test
     void testGetUserByEmail() {

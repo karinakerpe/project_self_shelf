@@ -1,5 +1,7 @@
 package com.selfshelf.project.service;
 
+import com.selfshelf.project.exception.UserNotFoundException;
+import com.selfshelf.project.model.DAO.UserEntityDao;
 import com.selfshelf.project.model.UserEntity;
 import com.selfshelf.project.model.UserRole;
 import com.selfshelf.project.repository.UserRepository;
@@ -17,7 +19,9 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
 
     @Override
-    public UserEntity saveUser(UserEntity user) {
+    public UserEntity saveUser(UserEntityDao input) {
+        UserEntity user = new UserEntity(input.getId(), input.getEmail(), input.getPassword(),input.getFirstName(),
+                input.getLastName(), input.getUserRole(),input.getReservations(),input.getIssuedBooks());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -37,13 +41,10 @@ public class UserServiceImpl implements UserService{
 
 
     public UserEntity getById (Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(
+                ()-> new UserNotFoundException("User not found!")
+        );
     }
-
-    public UserEntity findUserByEmail (String email){ //todo: this works
-        return userRepository.findByEmail(email);
-    }
-
 
     public UserEntity update(Long id, UserEntity user) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

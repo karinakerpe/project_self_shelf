@@ -1,5 +1,6 @@
 package com.selfshelf.project.service;
 
+import com.selfshelf.project.exception.BookNotFoundException;
 import com.selfshelf.project.model.BookEntity;
 import com.selfshelf.project.model.Status;
 import com.selfshelf.project.model.projections.BookSearch;
@@ -38,7 +39,7 @@ public class BookService {
     }
 
 
-    public BookEntity getBookById(Long id) { //todo in use
+    public BookEntity getBookById(Long id) {
         return bookRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Book not found"));
     }
@@ -46,7 +47,7 @@ public class BookService {
     public BookEntity getBookByIdNotDeleted (Long id){
         BookEntity book = getBookById(id);
         if(book.getBookStatus().equals(Status.DELETED)){
-            throw new RuntimeException("Book not found");
+            throw new BookNotFoundException("Book not found");
         }
         return book;
     }

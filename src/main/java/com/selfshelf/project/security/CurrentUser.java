@@ -2,7 +2,6 @@ package com.selfshelf.project.security;
 
 
 import com.selfshelf.project.model.UserEntity;
-import com.selfshelf.project.service.UserService;
 import com.selfshelf.project.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +26,6 @@ public class CurrentUser {
     }
 
     public UserEntity getCurrentUser() {
-        UserEntity currentUser = userService.getById(getCurrentUserId());
-        return currentUser;
+        return userService.getById(getCurrentUserId());
     }
 }
